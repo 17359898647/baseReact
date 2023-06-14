@@ -28,18 +28,31 @@ export function SvgIcon({ lineIcon, localIcon, className, color, rotate = 0, onC
       }
   }, [size])
   return (
-    <div className={`${className ?? ''} anticon anticon-desktop ant-menu-item-icon`} style={{
-      ..._size,
-    }}>
+    <div
+      className={`${className ?? ''} anticon anticon-desktop ant-menu-item-icon`}
+      style={{
+        ..._size,
+      }}
+    >
       {
         localIcon
           ? (
-            <svg onClick={onClick} className={'size-full cursor-pointer'} aria-hidden={true}>
+            <svg
+              aria-hidden={true}
+              className={'size-full cursor-pointer'}
+              onClick={onClick}
+            >
               <use xlinkHref={`#${iconName}`} />
             </svg>
           )
           : (
-            <Icon className='size-full cursor-pointer' onClick={onClick} icon={iconName} color={color} rotate={rotate} />
+            <Icon
+              className='size-full cursor-pointer'
+              color={color}
+              icon={iconName}
+              rotate={rotate}
+              onClick={onClick}
+            />
           )
 
       }

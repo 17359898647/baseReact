@@ -1,7 +1,8 @@
+import { useRecoilSnapshot } from 'recoil'
 import { RootLayout } from '@/layout/RootLayout'
-import { useRecoilSnapshot } from 'recoil';
+
 function DebugObserver() {
-  const snapshot = useRecoilSnapshot();
+  const snapshot = useRecoilSnapshot()
   useEffect(() => {
     for (const node of snapshot.getNodes_UNSTABLE({ isModified: true, isInitialized: true })) {
       console.debug('修改:', {
@@ -9,16 +10,20 @@ function DebugObserver() {
         value: snapshot.getLoadable(node).contents,
       })
     }
-  }, [snapshot]);
+  }, [snapshot])
 
-  return null;
+  return null
 }
 export function App() {
   return (
     <RootLayout>
       {import.meta.env.DEV && <DebugObserver />}
-      <div className='min-h-full red'>
-        <div className='red h-200vh' >123</div>
+      <div
+        className='min-h-full red'
+      >
+        <div
+          className='h-200vh red'
+        >123</div>
       </div>
     </RootLayout>
   )

@@ -20,33 +20,45 @@ function getItem(
   } as MenuItem
 }
 const items: MenuItem[] = [
-  getItem('Option 1', '1', <SvgIcon lineIcon={'line-md:align-center'} />),
-  getItem('Option 2', '2', <SvgIcon lineIcon={'line-md:align-center'} />),
-  getItem('User', 'sub1', <SvgIcon lineIcon={'line-md:align-center'} />, [
+  getItem('Option 1', '1',
+    <SvgIcon lineIcon={'line-md:align-center'} />),
+  getItem('Option 2', '2',
+    <SvgIcon lineIcon={'line-md:align-center'} />),
+  getItem('User', 'sub1',
+    <SvgIcon lineIcon={'line-md:align-center'} />, [
     getItem('Tom', '3'),
     getItem('Bill', '4'),
     getItem('Alex', '5'),
   ]),
-  getItem('Team', 'sub2', <SvgIcon lineIcon={'line-md:align-center'} />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-  getItem('Files', '9', <SvgIcon lineIcon={'line-md:align-center'} />),
+  getItem('Team', 'sub2',
+    <SvgIcon lineIcon={'line-md:align-center'} />, [getItem('Team 1', '6', <SvgIcon lineIcon={'line-md:align-center'} />), getItem('Team 2', '8', <SvgIcon lineIcon={'line-md:align-center'} />)]),
+  getItem('Files', '9',
+    <SvgIcon lineIcon={'line-md:align-center'} />),
 ]
 export function SiderView() {
   const [{ isCollapsed, isCollapsedWidth, isSiderWidth }, setLayoutStore] = useRecoilState(useLayoutStore)
   return (
-    <Sider collapsible
+    <Sider
       className='bottom-0 left-0 top-0 overflow-auto !fixed'
       collapsed={isCollapsed}
       collapsedWidth={isCollapsedWidth}
+      collapsible={true}
       width={isSiderWidth}
       onCollapse={isCollapsed => setLayoutStore(e => ({
         ...e,
         isCollapsed,
-      }))}>
-      <Header className='px-0 text-center'>123</Header>
-      <Menu defaultSelectedKeys={['1']}
+      }))}
+
+    >
+      <Header
+        className='px-0 text-center'
+      >123</Header>
+      <Menu
+        defaultSelectedKeys={['1']}
         items={items}
         mode="inline"
-        theme="dark" />
+        theme="dark"
+      />
     </Sider>
   )
 }

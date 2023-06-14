@@ -29,6 +29,9 @@ dependencies:
   antd:
     specifier: ^5.6.1
     version: 5.6.1(react-dom@18.2.0)(react@18.2.0)
+  eslint-plugin-gedatoureact:
+    specifier: ^0.0.3
+    version: 0.0.3(eslint@8.38.0)(typescript@5.0.2)
   eslint-plugin-react:
     specifier: ^7.32.2
     version: 7.32.2(eslint@8.38.0)
@@ -2705,6 +2708,25 @@ packages:
       escape-string-regexp: 1.0.5
       eslint: 8.38.0
       ignore: 5.2.4
+    dev: false
+
+  /eslint-plugin-gedatoureact@0.0.3(eslint@8.38.0)(typescript@5.0.2):
+    resolution: {integrity: sha512-B0trW2IiE3mvRyUn91IZZQrhsplnB7/NvnGvSkh38xfCMZsYygELnPgLiTZO8wblYG8P9JuuX1+cJGhWBzLOpQ==}
+    engines: {node: ^14.17.0 || ^16.0.0 || >= 18.0.0}
+    peerDependencies:
+      eslint: '>=7'
+    dependencies:
+      '@antfu/eslint-config': 0.39.5(eslint@8.38.0)(typescript@5.0.2)
+      '@unocss/eslint-config': 0.53.1(eslint@8.38.0)(typescript@5.0.2)
+      eslint: 8.38.0
+      eslint-plugin-react: 7.32.2(eslint@8.38.0)
+      requireindex: 1.2.0
+    transitivePeerDependencies:
+      - eslint-import-resolver-typescript
+      - eslint-import-resolver-webpack
+      - jest
+      - supports-color
+      - typescript
     dev: false
 
   /eslint-plugin-html@7.1.0:
@@ -5530,6 +5552,11 @@ packages:
   /repeat-string@1.6.1:
     resolution: {integrity: sha512-PV0dzCYDNfRi1jCDbJzpW7jNNDRuCOG/jI5ctQcGKt/clZD+YcPS3yIlWuTJMmESC8aevCFmWJy5wjAFgNqN6w==}
     engines: {node: '>=0.10'}
+    dev: false
+
+  /requireindex@1.2.0:
+    resolution: {integrity: sha512-L9jEkOi3ASd9PYit2cwRfyppc9NoABujTP8/5gFcbERmo5jUoAKovIC3fsF17pkTnGsrByysqX+Kxd2OTNI1ww==}
+    engines: {node: '>=0.10.5'}
     dev: false
 
   /resize-observer-polyfill@1.5.1:

@@ -82,29 +82,41 @@ export function RootLayout({ children }: {
   const fixedFooterStyle = useRecoilValue(useFixedFooterStyle)
   const ContentStyle = useRecoilValue(useContentStyle)
   return (
-    <Layout hasSider
-      className='min-h-screen w-screen'>
+    <Layout
+      className='min-h-screen w-screen'
+      hasSider={true}
+    >
       <SiderView />
-      <Layout className='relative min-h-full'
+      <Layout
+        className='relative min-h-full'
         style={{
           ...animationStyle,
-        }}>
-        <Header className=''
+        }}
+      >
+        <Header
+          className=''
           style={{
             ...fixedHeaderStyle,
-          }}>Header</Header>
-        <Content className='mx-6 my-4 p-4'
+          }}
+        >
+          <span>header</span>
+        </Header>
+        <Content
+          className='mx-6 my-4 p-4'
           style={{
             color: colorText,
             backgroundColor: colorBgContainer,
             ...ContentStyle,
-          }}>
+          }}
+        >
           {children && children}
         </Content>
-        <Footer className='text-center'
+        <Footer
+          className='text-center'
           style={{
             ...fixedFooterStyle,
-          }}>Ant Design ©2023 Created by Ant UED</Footer>
+          }}
+        >Ant Design ©2023 Created by Ant UED</Footer>
       </Layout>
     </Layout>
   )

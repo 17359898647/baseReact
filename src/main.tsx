@@ -16,17 +16,19 @@ const editorName: editorNameType = 'vscode-insiders'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RecoilRoot>
-      <ConfigProvider locale={zhCN}
+      <ConfigProvider
+        locale={zhCN}
         theme={{
           algorithm: theme.darkAlgorithm,
-        }}>
+        }}
+      >
         <App />
       </ConfigProvider>
     </RecoilRoot>
     {
       isDev && (
         <Inspector
-          disableLaunchEditor
+          disableLaunchEditor={true}
           keys={['command', 'a']}
           onClickElement={({ codeInfo }: InspectParams) => {
             const { absolutePath, columnNumber, lineNumber } = codeInfo || {}
