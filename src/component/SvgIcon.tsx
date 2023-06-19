@@ -29,6 +29,7 @@ export function SvgIcon({ lineIcon, localIcon, className, color, rotate = 0, onC
   }, [size])
   return (
     <div
+      key={iconName}
       className={`${className ?? ''} anticon anticon-desktop ant-menu-item-icon`}
       style={{
         ..._size,

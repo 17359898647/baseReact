@@ -1,30 +1,58 @@
-import { useRecoilSnapshot } from 'recoil'
+import { Button, ConfigProvider, theme } from 'antd'
+import zhCN from 'antd/locale/zh_CN'
+import { random } from 'lodash-es'
+import { BrowserRouter } from 'react-router-dom'
 import { RootLayout } from '@/layout/RootLayout'
 
-function DebugObserver() {
-  const snapshot = useRecoilSnapshot()
-  useEffect(() => {
-    for (const node of snapshot.getNodes_UNSTABLE({ isModified: true, isInitialized: true })) {
-      console.debug('修改:', {
-        key: node.key,
-        value: snapshot.getLoadable(node).contents,
-      })
-    }
-  }, [snapshot])
-
-  return null
-}
 export function App() {
+  const { isDarkMode } = useRecoilValue(useLayoutStore)
+  const { run, cancel, loading, data } = useAxios({
+    url: '/get',
+  })
   return (
-    <RootLayout>
-      {import.meta.env.DEV && <DebugObserver />}
-      <div
-        className='min-h-full red'
+    <BrowserRouter>
+      <ConfigProvider
+        locale={zhCN}
+        theme={{
+          algorithm: isDarkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
+        }}
       >
-        <div
-          className='h-200vh red'
-        >123</div>
-      </div>
-    </RootLayout>
+        <RootLayout>
+          <div  className='h-100% red'
+          >
+            <div className='h-64px flex-1 gap-4'>
+              <Button
+                onClick={() => {
+                  const number = random(1, 100)
+                  console.log(number)
+                  run({
+                    params: {
+                      number,
+                    },
+                  })
+                }}
+              >
+                触发请求
+              </Button>
+              <Button
+                onClick={() => cancel()}
+              >
+                取消请求
+              </Button>
+            </div>
+            <div>
+              <div>
+                {loading ? 'loading' : 'loaded'}
+              </div>
+              <div>
+                <pre>
+                  {JSON.stringify(data, null, 2)}
+                </pre>
+              </div>
+            </div>
+          </div>
+        </RootLayout>
+      </ConfigProvider>
+    </BrowserRouter>
   )
 }

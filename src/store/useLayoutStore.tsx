@@ -8,6 +8,7 @@ export interface useLayoutStoreType {
   isFixedFooter: boolean
   isContentPadding: number
   isContentMargin: number
+  isDarkMode: boolean
 }
 export const useLayoutStore = atom<useLayoutStoreType>({
   key: 'useLayoutStore',
@@ -21,8 +22,22 @@ export const useLayoutStore = atom<useLayoutStoreType>({
     isFixedFooter: true,
     isContentPadding: 24,
     isContentMargin: 14,
+    isDarkMode: true,
   },
   effects_UNSTABLE: [
     useRecoilKeepAlive(),
   ],
+})
+export const useAnimationStyle = selector({
+  key: 'animationStyle',
+  get: ({ get }): React.CSSProperties => {
+    const { isCollapsed, isCollapsedWidth, isSiderWidth } = get(useLayoutStore)
+    return isCollapsed
+      ? {
+        marginLeft: isCollapsedWidth,
+      }
+      : {
+        marginLeft: isSiderWidth,
+      }
+  },
 })

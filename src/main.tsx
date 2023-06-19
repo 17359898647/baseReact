@@ -1,29 +1,31 @@
-import { ConfigProvider, theme } from 'antd'
-import zhCN from 'antd/locale/zh_CN'
-import React from 'react'
 import type { InspectParams } from 'react-dev-inspector'
 import { Inspector } from 'react-dev-inspector'
 import ReactDOM from 'react-dom/client'
-import { RecoilRoot } from 'recoil'
+import { RecoilRoot, useRecoilSnapshot } from 'recoil'
 import { setupAssets } from './plugin/setupAssets'
 import { App } from '@/App.tsx'
 
 setupAssets()
 const isDev = import.meta.env.DEV
 type editorNameType = 'vscode' | 'webstorm' | 'vscode-insiders'
-const editorName: editorNameType = 'vscode-insiders'
-
+const editorName: editorNameType = 'vscode'
+function DebugObserver() {
+  const snapshot = useRecoilSnapshot()
+  useEffect(() => {
+    for (const node of snapshot.getNodes_UNSTABLE({ isModified: true, isInitialized: true })) {
+      console.debug('修改:', {
+        key: node.key,
+        value: snapshot.getLoadable(node).contents,
+      })
+    }
+  }, [snapshot])
+  return null
+}
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  < >
     <RecoilRoot>
-      <ConfigProvider
-        locale={zhCN}
-        theme={{
-          algorithm: theme.darkAlgorithm,
-        }}
-      >
-        <App />
-      </ConfigProvider>
+      {import.meta.env.DEV && <DebugObserver />}
+      <App />
     </RecoilRoot>
     {
       isDev && (
@@ -40,5 +42,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         />
       )
     }
-  </React.StrictMode>,
+  </>,
 )

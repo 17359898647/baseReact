@@ -43,21 +43,24 @@ export function SiderView() {
       collapsed={isCollapsed}
       collapsedWidth={isCollapsedWidth}
       collapsible={true}
+      trigger={null}
       width={isSiderWidth}
       onCollapse={isCollapsed => setLayoutStore(e => ({
         ...e,
         isCollapsed,
       }))}
-
     >
       <Header
-        className='px-0 text-center'
-      >123</Header>
+        className='p-0 text-center text-[rgba(255,255,255,0.85)]'
+      >
+        123
+      </Header>
       <Menu
+        // className='red'
         defaultSelectedKeys={['1']}
         items={items}
         mode="inline"
-        theme="dark"
+        theme={'dark'}
       />
     </Sider>
   )

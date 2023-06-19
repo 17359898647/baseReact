@@ -35,12 +35,10 @@
       "vite-plugin-svg-icons/client",
       "vite/client",
       "node",
-      "vitest/globals"
+      "vitest/globals",
+      "src/types/*"
     ]
   },
-  "include": [
-    "src"
-  ],
   "exclude": [
     "node_modules",
     "dist"
