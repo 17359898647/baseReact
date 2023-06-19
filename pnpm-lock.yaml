@@ -35,6 +35,9 @@ dependencies:
   axios:
     specifier: ^1.4.0
     version: 1.4.0
+  eslint-plugin-gedatoureact:
+    specifier: ^0.0.11
+    version: 0.0.11(vite@4.3.9)
   eslint-plugin-react:
     specifier: ^7.32.2
     version: 7.32.2(eslint@8.43.0)
@@ -2907,6 +2910,18 @@ packages:
       escape-string-regexp: 1.0.5
       eslint: 8.43.0
       ignore: 5.2.4
+    dev: false
+
+  /eslint-plugin-gedatoureact@0.0.11(vite@4.3.9):
+    resolution: {integrity: sha512-AEkSbY2hSXHICymcOX3NMT2b1J8NLDYyh7u19D1DQ39zL66ZlMz6LHFGoFHAuurcwXBXQyfhXjz4pnad3e2X/Q==}
+    peerDependencies:
+      vite: ^4.0.0 || ^3.0.0
+    dependencies:
+      acorn-walk: 8.2.0
+      fast-glob: 3.2.12
+      magic-string: 0.30.0
+      source-map: 0.7.4
+      vite: 4.3.9(@types/node@20.3.1)
     dev: false
 
   /eslint-plugin-html@7.1.0:

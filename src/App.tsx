@@ -18,8 +18,7 @@ export function App() {
         }}
       >
         <RootLayout>
-          <div  className='h-100% red'
-          >
+          <div className='h-100% red'>
             <div className='h-64px flex-1 gap-4'>
               <Button
                 onClick={() => {

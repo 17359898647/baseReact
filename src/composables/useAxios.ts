@@ -1,4 +1,4 @@
-import type { AxiosResponse, CancelTokenSource } from 'axios'
+import type { AxiosResponse } from 'axios'
 import axios from 'axios'
 
 // const codeMessage = {
@@ -82,25 +82,13 @@ export type useAxiosOptions<D = any, M extends methodType = methodType> = M exte
 }
 export function useAxios<D = any, M extends methodType = methodType>(options: useAxiosOptions<D, M>) {
   const { url, method = 'get', params, data, manual = false, onBefore, onSuccess, onError, onFinally } = options as useAxiosOptions & { data: Record<string, any> }
-  const [updateCancelToken, setUpdateCancelToken] = useState(0)
-  const cancelTokenSource = useCreation(() => axios.CancelToken.source, [])
-  const cancelToken: CancelTokenSource = useCreation(() => cancelTokenSource(), [updateCancelToken])
-
-  const abort = (message?: string | number) => {
-    setUpdateCancelToken(v => v + 1)
-    cancelToken.cancel(String(message))
-  }
   const _useRequest = useRequest((options?: any) => {
     const { params: _params, data: _data } = options || {}
-    abort(updateCancelToken)
-    console.log(cancelToken)
-    // const Promise=()
     return instance({
       url,
       method,
       params: _params ?? params,
       data: _data ?? data,
-      cancelToken: cancelToken.token,
     })
   }, {
     manual,
@@ -110,16 +98,7 @@ export function useAxios<D = any, M extends methodType = methodType>(options: us
     onFinally,
     cacheKey: url,
     debounceWait: 300,
-  }, [
-    () => {
-      return {
-        onCancel: () => {
-          console.log('cancel')
-          abort('cancel')
-        },
-      }
-    },
-  ])
+  })
   return {
     ..._useRequest,
     run: _useRequest.run as (options: {

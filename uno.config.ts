@@ -29,6 +29,5 @@ export default defineConfig({
       },
       { autocomplete: ['size-<num>px'] },
     ],
-
   ],
 })
