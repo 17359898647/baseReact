@@ -1,6 +1,6 @@
-import { forEach } from 'lodash-es'
-import { createElement } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { forEach, isString, map } from 'lodash-es'
+import { Suspense, createElement } from 'react'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 
 type LazyType = Parameters<typeof lazy>[0]
 type ComponentType = Record<string, LazyType>
@@ -23,30 +23,71 @@ function createAllRouter() {
   return result
 }
 const lazyFn = (fn: LazyType) => createElement(lazy(fn))
-const RootLayout = lazy(() => import('@/layout/RootLayout'))
-export function CreateRouter() {
-  const allRouter = createAllRouter()
+
+interface RouterType {
+  path: string
+  element: string | JSX.Element
+  children?: RouterType[]
+}
+
+const router: RouterType[] = [
+  {
+    path: '/',
+    element: lazyFn(() => import('@/layout/RootLayout')),
+    children: [
+      {
+        path: '/',
+        element: '/HomeView',
+      },
+      {
+        path: '/about',
+        element: '/AboutView',
+      },
+      {
+        path: '*',
+        element: '/NotFound',
+      },
+    ],
+  },
+  {
+    path: '/login',
+    element: (
+      <div>
+        <h1>
+          登录
+        </h1>
+      </div>
+    ),
+  },
+]
+const allRouter = createAllRouter()
+
+function RenderRouter(router: RouterType[]) {
+  return map(router, ({ element, path, children }) => {
+    return (
+      <Route
+        key={path}
+        element={isString(element) ? lazyFn(allRouter[element]) : element}
+        path={path}
+      >
+        {(children && children.length > 0) && RenderRouter(children)}
+      </Route>
+    )
+  })
+}
+
+function Routers() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          element={<RootLayout />}
-          path='/'
-        >
-          <Route
-            element={lazyFn(allRouter['/HomeView'])}
-            path='/'
-          />
-          <Route
-            element={lazyFn(() => import('@/pages/AboutView'))}
-            path='/about'
-          />
-          <Route
-            element={lazyFn(() => import('@/pages/NotFound'))}
-            path='*'
-          />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Router>
+      <Suspense fallback={<div>
+        loading...
+      </div>}
+      >
+        <Routes>
+          {RenderRouter(router)}
+        </Routes>
+      </Suspense>
+    </Router>
   )
 }
+export const MemoRouters = memo(Routers)

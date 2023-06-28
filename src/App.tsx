@@ -1,6 +1,6 @@
 import { ConfigProvider, theme } from 'antd'
 import zhCN from 'antd/locale/zh_CN'
-import { CreateRouter } from './router'
+import { MemoRouters } from './router'
 
 export function App() {
   const { isDarkMode } = useRecoilValue(useLayoutStore)
@@ -11,7 +11,7 @@ export function App() {
         algorithm: isDarkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
       }}
     >
-      <CreateRouter />
+      <MemoRouters />
     </ConfigProvider>
   )
 }
