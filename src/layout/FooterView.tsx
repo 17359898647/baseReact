@@ -1,9 +1,10 @@
 import { Layout } from 'antd'
+import type { CSSProperties } from 'react'
 
 const { Footer } = Layout
 const useFixedFooterStyle = selector({
   key: 'fixedFooterStyle',
-  get: ({ get }): React.CSSProperties => {
+  get: ({ get }): CSSProperties => {
     const { isFixedFooter, isFooterHeight, isCollapsed, isCollapsedWidth, isSiderWidth } = get(useLayoutStore)
     const animationStyle = get(useAnimationStyle)
     return isFixedFooter
@@ -25,7 +26,7 @@ export function FooterView() {
   const fixedFooterStyle = useRecoilValue(useFixedFooterStyle)
   return (
     <Footer
-      className='text-center baseAnimation'
+      className='flex-center baseAnimation'
       style={{
         ...fixedFooterStyle,
       }}

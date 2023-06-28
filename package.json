@@ -22,7 +22,7 @@
     "@unocss/eslint-config": "^0.53.1",
     "@unocss/transformer-attributify-jsx": "^0.53.1",
     "ahooks": "^3.7.7",
-    "antd": "^5.6.1",
+    "antd": "^5.6.2",
     "axios": "^1.4.0",
     "eslint-plugin-gedatoureact": "^0.0.11",
     "eslint-plugin-react": "^7.32.2",

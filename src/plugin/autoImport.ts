@@ -3,7 +3,7 @@ import type { PluginOption } from 'vite'
 
 export function autoImport(): PluginOption {
   return AutoImport({
-    imports: ['react', 'ahooks', 'recoil'],
+    imports: ['react', 'ahooks', 'recoil', 'react-router-dom'],
     dts: './src/types/auto-import.d.ts',
     dirs: ['./src/composables', './src/utils', './src/store'],
     eslintrc: {

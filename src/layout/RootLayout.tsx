@@ -1,11 +1,13 @@
 import { Layout } from 'antd'
+import { Suspense } from 'react'
+import { Outlet } from 'react-router-dom'
 import { ContentView } from './ContentView'
 import { FooterView } from './FooterView'
 import { HeaderView } from './HeaderView'
 import { SiderView } from '@/layout/SiderView'
 
 export function RootLayout({ children }: {
-  children: React.ReactNode | React.ReactNode[]
+  children?: React.ReactNode | React.ReactNode[]
 }) {
   const animationStyle = useRecoilValue(useAnimationStyle)
   return (
@@ -22,10 +24,16 @@ export function RootLayout({ children }: {
       >
         <HeaderView />
         <ContentView>
-          {children && children}
+          <Suspense fallback={<div>
+            loading
+          </div>}
+          >
+            {children || <Outlet />}
+          </Suspense>
         </ContentView>
         <FooterView />
       </Layout>
     </Layout>
   )
 }
+export default RootLayout
