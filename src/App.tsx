@@ -4,6 +4,7 @@ import { MemoRouters } from './router'
 
 export function App() {
   const { isDarkMode } = useRecoilValue(useLayoutStore)
+
   return (
     <ConfigProvider
       locale={zhCN}

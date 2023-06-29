@@ -1,82 +1,44 @@
-import { forEach, isString, map } from 'lodash-es'
-import { Suspense, createElement } from 'react'
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import { isString, map } from 'lodash-es'
+import { Suspense } from 'react'
+import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import type { RouterType } from './getRouter'
+import { createAllRouter, lazyFn, router } from './getRouter'
 
-type LazyType = Parameters<typeof lazy>[0]
-type ComponentType = Record<string, LazyType>
-
-function getFileName(path: string) {
-  const reg = /\/src\/pages(.*)\.(tsx|ts)/
-  const result = path.match(reg)
-  return result ? result[1] : ''
-}
-
-function createAllRouter() {
-  const allRouter = import.meta.glob('@/pages/**/*.{ts,tsx}', {
-    // import: 'default',
-  }) as ComponentType
-  const result: ComponentType = {}
-  forEach(allRouter, (value, key) => {
-    const name = getFileName(key)
-    result[name] = value
-  })
-  return result
-}
-const lazyFn = (fn: LazyType) => createElement(lazy(fn))
-
-interface RouterType {
-  path: string
-  element: string | JSX.Element
-  children?: RouterType[]
-}
-
-const router: RouterType[] = [
-  {
-    path: '/',
-    element: lazyFn(() => import('@/layout/RootLayout')),
-    children: [
-      {
-        path: '/',
-        element: '/HomeView',
-      },
-      {
-        path: '/about',
-        element: '/AboutView',
-      },
-      {
-        path: '*',
-        element: '/NotFound',
-      },
-    ],
-  },
-  {
-    path: '/login',
-    element: (
-      <div>
-        <h1>
-          登录
-        </h1>
-      </div>
-    ),
-  },
-]
-const allRouter = createAllRouter()
-
-function RenderRouter(router: RouterType[]) {
-  return map(router, ({ element, path, children }) => {
+function RenderRouter({
+  router,
+  userToken,
+}: {
+  router: RouterType[]
+  userToken: string | null
+}) {
+  const allRouter = createAllRouter()
+  return map(router, ({ element, path, children, needLogin: isLogin }) => {
+    const needLogin = (!userToken && isLogin === undefined)
+    const Component = needLogin
+      ? (
+        <Navigate
+          replace={true}
+          to={'/login'}
+        />
+      )
+      : (isString(element) ? lazyFn(allRouter[element]) : element)
     return (
       <Route
         key={path}
-        element={isString(element) ? lazyFn(allRouter[element]) : element}
+        element={Component}
         path={path}
       >
-        {(children && children.length > 0) && RenderRouter(children)}
+        {(children && children.length > 0) && RenderRouter({
+          router: children,
+          userToken,
+        })}
       </Route>
     )
   })
 }
 
 function Routers() {
+  const { userToken } = useRecoilValue(useUserStore)
   return (
     <Router>
       <Suspense fallback={<div>
@@ -84,7 +46,10 @@ function Routers() {
       </div>}
       >
         <Routes>
-          {RenderRouter(router)}
+          {RenderRouter({
+            router,
+            userToken,
+          })}
         </Routes>
       </Suspense>
     </Router>

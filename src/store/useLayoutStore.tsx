@@ -14,7 +14,7 @@ export const useLayoutStore = atom<useLayoutStoreType>({
   key: 'useLayoutStore',
   default: {
     isCollapsed: false,
-    isSiderWidth: 300,
+    isSiderWidth: 180,
     isCollapsedWidth: 100,
     isHeaderHeight: 64,
     isFooterHeight: 48,

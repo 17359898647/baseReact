@@ -24,7 +24,7 @@ export function RootLayout({ children }: {
       >
         <HeaderView />
         <ContentView>
-          <Suspense fallback={<div>
+          <Suspense fallback={<div className='bg-red-600'>
             loading
           </div>}
           >
