@@ -1,4 +1,4 @@
-import { forEach } from 'lodash-es'
+import { find, forEach } from 'lodash-es'
 import { createElement } from 'react'
 
 type LazyType = Parameters<typeof lazy>[0]
@@ -42,6 +42,11 @@ export interface RouterType {
    * @default: 0
    */
   isSort?: number
+  /**
+   * @description: 是否固定在标签栏上
+   * @default: false
+   */
+  isFixed?: true
 }
 
 export const MenuList: RouterType[] = [
@@ -50,6 +55,7 @@ export const MenuList: RouterType[] = [
     element: '/HomeView',
     title: '首页',
     lineIcon: 'material-symbols:android-google-home',
+    isFixed: true,
   },
   {
     path: '/about',
@@ -68,13 +74,17 @@ function createFlatRouter(router: RouterType[], result: RouterType[] = []) {
   return result
 }
 
+export const flatRouter = createFlatRouter(MenuList)
+
+export const findRouter = (path: string) => find(flatRouter, item => item.path === path)!
+
 export const router: RouterType[] = [
   {
     path: '/',
     element: lazyFn(() => import('@/layout/RootLayout')),
     needLogin: false,
     children: [
-      ...createFlatRouter(MenuList),
+      ...flatRouter,
       {
         path: '*',
         element: '/NotFound',

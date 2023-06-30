@@ -1,12 +1,16 @@
 import { Button, Card, Form, Input, Layout } from 'antd'
+import { random } from 'lodash-es'
 
 const { Item } = Form
 function Login() {
   const navTo = useNavigate()
   const { setToken } = setUserToken()
-  const onFinish = (values: any) => {
-    console.log(values)
+  const [loading, setloading] = useState(false)
+  const onFinish = async (values: any) => {
     setToken('123456')
+    setloading(true)
+    await sleep(random(1000, 3000))
+    console.log('Success:', values)
     navTo('/')
   }
   return (
@@ -34,7 +38,10 @@ function Login() {
             <Input />
           </Item>
           <Item>
-            <Button htmlType='submit'>
+            <Button
+              htmlType='submit'
+              loading={loading}
+            >
               登录
             </Button>
           </Item>

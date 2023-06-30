@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom'
 import { ContentView } from './ContentView'
 import { FooterView } from './FooterView'
 import { HeaderView } from './HeaderView'
+import { TagView } from './TagView'
 import { SiderView } from '@/layout/SiderView'
 
 export function RootLayout({ children }: {
@@ -23,7 +24,8 @@ export function RootLayout({ children }: {
         }}
       >
         <HeaderView />
-        <ContentView>
+        <TagView />
+        <ContentView >
           <Suspense fallback={<div className='bg-red-600'>
             loading
           </div>}

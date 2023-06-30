@@ -1,15 +1,18 @@
-import { Link } from 'react-router-dom'
+import { Button, Card } from 'antd'
 
 export function Component() {
-    return (
-        <div className='flex gap-4'>
-            <Link to='/about'>
-                about
-            </Link>
-            <Link to='/'>
-                home
-            </Link>
-        </div>
-    )
+  const { setToken } = setUserToken()
+  return (
+    <Card
+      className='size-full'
+      title='首页'
+    >
+      <Button
+        onClick={() => setToken(null)}
+      >
+        退出登录
+      </Button>
+    </Card>
+  )
 }
 export default Component

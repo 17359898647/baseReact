@@ -4,7 +4,6 @@ import { map } from 'lodash-es'
 import { SvgIcon } from '@/component/SvgIcon'
 import { MenuList, type RouterType } from '@/router/getRouter'
 
-console.log(MenuList)
 type MenuItem = Required<MenuProps>['items'][number]
 interface createItemParams {
   title?: string
@@ -34,20 +33,16 @@ function createItem({
   }
 }
 
-function deepSotrRouter(router: RouterType[]) {
-  // 递归排序
-  const sortRouter = (router: RouterType[]) => {
-    return router.sort((a, b) => (a.isSort || 0) - (b.isSort || 0))
-  }
-  return map(sortRouter(router), ({ children, ...item }) => {
+function deepSotrRouter(router: RouterType[]): RouterType[] {
+  return map(router.sort((a, b) => (a.isSort || 0) - (b.isSort || 0)), ({ children, ...item }) => {
     if (children && children.length > 0) {
       return {
         ...item,
-        children: sortRouter(children),
+        children,
       }
     }
     return item
-  }) as RouterType[]
+  })
 }
 
 function deepCreateMenu(router: RouterType[]) {
@@ -66,15 +61,18 @@ function deepCreateMenu(router: RouterType[]) {
 }
 
 function _MenuView() {
-  const _MenuList = deepCreateMenu(MenuList)
+  const navTo = useRouterTo()
+  const MenuClick = (path: string) => {
+    navTo(path)
+  }
   return (
     <Menu
       defaultSelectedKeys={['1']}
-      items={_MenuList}
+      items={deepCreateMenu(MenuList)}
       mode="inline"
       theme={'dark'}
       onClick={({ key }) => {
-        console.log(key)
+        MenuClick(key)
       }}
     />
   )

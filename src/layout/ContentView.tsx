@@ -3,9 +3,9 @@ import { Layout, theme } from 'antd'
 const useContentStyle = selector({
     key: 'contentStyle',
     get: ({ get }): React.CSSProperties => {
-        const { isFixedHeader, isHeaderHeight, isFixedFooter, isFooterHeight, isContentMargin } = get(useLayoutStore)
+        const { isFixedHeader, isHeaderHeight, isTagHeight, isFixedFooter, isFooterHeight, isContentMargin } = get(useLayoutStore)
         return {
-            marginTop: isFixedHeader ? isHeaderHeight + isContentMargin : isContentMargin,
+            marginTop: isFixedHeader ? isHeaderHeight + isContentMargin + isTagHeight : isContentMargin,
             marginBottom: isFixedFooter ? isFooterHeight + isContentMargin : isContentMargin,
             marginLeft: isContentMargin,
             marginRight: isContentMargin,

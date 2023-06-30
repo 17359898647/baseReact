@@ -4,6 +4,7 @@ export interface useLayoutStoreType {
   isCollapsedWidth: number
   isHeaderHeight: number
   isFooterHeight: number
+  isTagHeight: number
   isFixedHeader: boolean
   isFixedFooter: boolean
   isContentPadding: number
@@ -18,6 +19,7 @@ export const useLayoutStore = atom<useLayoutStoreType>({
     isCollapsedWidth: 100,
     isHeaderHeight: 64,
     isFooterHeight: 48,
+    isTagHeight: 48,
     isFixedHeader: true,
     isFixedFooter: true,
     isContentPadding: 24,

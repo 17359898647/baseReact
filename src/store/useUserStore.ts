@@ -4,7 +4,7 @@ export interface IUserStore {
 export const useUserStore = atom<IUserStore>({
   key: 'useUserStore',
   default: {
-    userToken: localStorage.getItem('token'),
+    userToken: null,
   },
   effects_UNSTABLE: [
     useRecoilKeepAlive(),
@@ -12,8 +12,7 @@ export const useUserStore = atom<IUserStore>({
 })
 export function setUserToken() {
   const [{ userToken }, setUserStore] = useRecoilState(useUserStore)
-  const setToken = (value: string) => {
-    localStorage.setItem('token', value)
+  const setToken = (value: string | null) => {
     setUserStore(e => ({
       ...e,
       userToken: value,
