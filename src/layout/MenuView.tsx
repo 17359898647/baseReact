@@ -59,22 +59,39 @@ function deepCreateMenu(router: RouterType[]) {
     return item
   })
 }
-
-function _MenuView() {
+export const MenuView = memo(() => {
   const navTo = useRouterTo()
   const MenuClick = (path: string) => {
     navTo(path)
   }
+  const [openKeys, setOpenKeys] = useLocalStorageState<string[]>('openKeys', {
+    defaultValue: [],
+  })
+  const [selectKey, _setSelectKeys] = useLocalStorageState<string[]>('selectKey', {
+    defaultValue: [],
+  })
+
+  const setSelectKeys = useMemoizedFn(_setSelectKeys)
+
+  const { pathname: currentPath } = useLocation()
+  useEffect(() => {
+    setSelectKeys([currentPath])
+  }, [currentPath, setSelectKeys])
   return (
     <Menu
-      defaultSelectedKeys={['1']}
       items={deepCreateMenu(MenuList)}
       mode="inline"
+      openKeys={openKeys}
+      selectedKeys={selectKey}
       theme={'dark'}
-      onClick={({ key }) => {
+      onOpenChange={(openKeys) => {
+        setOpenKeys(openKeys)
+        console.log(openKeys)
+      }}
+      onSelect={({ key }) => {
+        setSelectKeys([key])
         MenuClick(key)
       }}
     />
   )
-}
-export const MenuView = memo(_MenuView)
+})

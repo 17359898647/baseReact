@@ -5,7 +5,7 @@ const useContentStyle = selector({
     get: ({ get }): React.CSSProperties => {
         const { isFixedHeader, isHeaderHeight, isTagHeight, isFixedFooter, isFooterHeight, isContentMargin } = get(useLayoutStore)
         return {
-            marginTop: isFixedHeader ? isHeaderHeight + isContentMargin + isTagHeight : isContentMargin,
+            marginTop: isFixedHeader ? isHeaderHeight + isTagHeight : 0,
             marginBottom: isFixedFooter ? isFooterHeight + isContentMargin : isContentMargin,
             marginLeft: isContentMargin,
             marginRight: isContentMargin,

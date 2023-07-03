@@ -11,7 +11,6 @@ const useTagViewStyle = selector({
   get: ({ get }): React.CSSProperties => {
     const { isFixedHeader, isHeaderHeight, isCollapsed, isContentPadding, isCollapsedWidth, isSiderWidth, isTagHeight } = get(useLayoutStore)
     const animationStyle = get(useAnimationStyle)
-    console.log(animationStyle)
     return isFixedHeader
       ? {
         height: isTagHeight,
@@ -30,26 +29,29 @@ const useTagViewStyle = selector({
   },
 })
 
-function Tag({
+const Tag = memo(({
   tagContent: {
     path, title, localIcon, lineIcon,
   },
 }: {
   tagContent: RouterType
   key: React.Key
-}) {
+}) => {
   if (!localIcon && !lineIcon)
     lineIcon = 'material-symbols:disabled-by-default-rounded'
   const { pathname: currentPath } = useLocation()
+  const navTo = useRouterTo()
+  const MenuClick = (path: string) => {
+    navTo(path)
+  }
   return (
     <div
       className={
-        `h-80% flex-center cursor-pointer gap-1 ${path === currentPath ? 'red' : ''} text-center`
+        `h-60% px-1 flex-center cursor-pointer gap-1 ${path === currentPath ? 'red' : ''} text-center `
       }
       onClick={() => {
-        console.log(path)
+        MenuClick(path)
       }}
-
     >
       <SvgIcon
         lineIcon={lineIcon}
@@ -60,12 +62,10 @@ function Tag({
       </span>
     </div>
   )
-}
+})
 
-function tagListStore() {
+function actionTagList() {
   const [{ tagList }, setTagStore] = useRecoilState(useTagStore)
-  const { pathname: currentPath } = useLocation()
-  const prePath = useRef(currentPath)
   const setTagList = useMemoizedFn((tag: RouterType) => {
     if (!find(tagList, tag)) {
       setTagStore((draft) => {
@@ -79,6 +79,16 @@ function tagListStore() {
       })
     }
   })
+  return {
+    tagList,
+    setTagList,
+  }
+}
+
+function tagListStore() {
+  const { pathname: currentPath } = useLocation()
+  const prePath = useRef(currentPath)
+  const { setTagList, tagList } = actionTagList()
   useEffect(() => {
     const tag = findRouter(currentPath)
     setTagList(tag)
@@ -92,8 +102,7 @@ function tagListStore() {
     setTagList,
   }
 }
-
-function _TagView() {
+export const TagView = memo(() => {
   const TagViewStyle = useRecoilValue(useTagViewStyle)
   const {
     token: { colorText, colorBgBase },
@@ -120,5 +129,4 @@ function _TagView() {
       }
     </Header>
   )
-}
-export const TagView = memo(_TagView)
+})

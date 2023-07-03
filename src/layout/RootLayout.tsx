@@ -1,16 +1,15 @@
 import { Layout } from 'antd'
 import { Suspense } from 'react'
-import { Outlet } from 'react-router-dom'
 import { ContentView } from './ContentView'
 import { FooterView } from './FooterView'
 import { HeaderView } from './HeaderView'
 import { TagView } from './TagView'
+import { KeepAlive } from '@/component/KeepAlive/KeepAlive'
 import { SiderView } from '@/layout/SiderView'
 
-export function RootLayout({ children }: {
-  children?: React.ReactNode | React.ReactNode[]
-}) {
+export function RootLayout() {
   const animationStyle = useRecoilValue(useAnimationStyle)
+  const Outlet = useOutlet()
   return (
     <Layout
       className='min-h-screen w-screen'
@@ -30,7 +29,9 @@ export function RootLayout({ children }: {
             loading
           </div>}
           >
-            {children || <Outlet />}
+            <KeepAlive include={['/about']} >
+              {Outlet}
+            </KeepAlive>
           </Suspense>
         </ContentView>
         <FooterView />
