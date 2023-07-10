@@ -4,7 +4,7 @@ import { ContentView } from './ContentView'
 import { FooterView } from './FooterView'
 import { HeaderView } from './HeaderView'
 import { TagView } from './TagView'
-import { KeepAlive } from '@/component/KeepAlive/KeepAlive'
+import { KeepAlive } from '@/component/KeepAlive'
 import { SiderView } from '@/layout/SiderView'
 
 export function RootLayout() {

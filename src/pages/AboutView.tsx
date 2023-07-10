@@ -1,6 +1,6 @@
 import { Button, Card, Input } from 'antd'
 import { useImmer } from 'use-immer'
-import { KeepAliveContext } from '@/component/KeepAlive/KeepAlive'
+import { KeepAliveContext } from '@/component/KeepAlive'
 
 export function Component() {
   const { setToken } = setUserToken()
@@ -16,7 +16,9 @@ export function Component() {
       title='关于'
     >
       <Button
-        onClick={() => setToken(null)}
+        onClick={() => {
+          setToken(null)
+        }}
       >
         退出登录
       </Button>

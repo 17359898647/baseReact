@@ -127,10 +127,10 @@ function Component({ active, children, name, renderDiv }: ComponentProps) {
       else
         renderDiv.current?.appendChild(targetElement)
     }
-  }, [active])
+  })
   useEffect(() => { // 添加一个id 作为标识 并没有什么太多作用
     targetElement.setAttribute('id', name)
-  }, [name])
+  })
   // 把vnode 渲染到document.createElement('div') 里面
   return (
     <>

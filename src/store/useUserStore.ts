@@ -12,11 +12,13 @@ export const useUserStore = atom<IUserStore>({
 })
 export function setUserToken() {
   const [{ userToken }, setUserStore] = useRecoilState(useUserStore)
+  const navTo = useRouterTo()
   const setToken = (value: string | null) => {
     setUserStore(e => ({
       ...e,
       userToken: value,
     }))
+    navTo('/login')
   }
   return {
     userToken,
